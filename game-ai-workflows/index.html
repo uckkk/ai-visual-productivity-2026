@@ -188,6 +188,7 @@
       background: #111;
     }
     .workbench-card__media img,
+    .workbench-card__media video,
     .workbench-card__media iframe { width: 100%; height: 100%; object-fit: cover; border: 0; }
     .dreammaker-thumbs {
       position: absolute;
@@ -219,6 +220,37 @@
     .dreammaker-thumb:hover,
     .dreammaker-thumb:focus-visible,
     .dreammaker-thumb.is-active { border-color: var(--accent); opacity: 1; }
+    .vber-main { width: 100%; height: 100%; }
+    .vber-main video,
+    .vber-main iframe { width: 100%; height: 100%; object-fit: contain; border: 0; }
+    .vber-thumbs {
+      position: absolute;
+      left: 12px;
+      bottom: 54px;
+      z-index: 3;
+      display: grid;
+      grid-template-columns: repeat(2, 96px);
+      gap: 8px;
+      padding: 8px;
+      border-radius: 14px;
+      background: rgba(17,17,17,.7);
+      backdrop-filter: blur(12px);
+    }
+    .vber-thumb {
+      aspect-ratio: 16/9;
+      overflow: hidden;
+      padding: 0;
+      border: 2px solid transparent;
+      border-radius: 8px;
+      background: #111;
+      opacity: .68;
+      cursor: pointer;
+      transition: opacity .2s ease, border-color .2s ease;
+    }
+    .vber-thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .vber-thumb:hover,
+    .vber-thumb:focus-visible,
+    .vber-thumb.is-active { border-color: var(--accent); opacity: 1; }
 
     .preview-dialog {
       width: min(94vw, 1680px);
@@ -298,6 +330,7 @@
       .flow { grid-template-columns: 1fr; }
       .workbench-card__head { min-height: 0; padding: 30px 28px; }
       .dreammaker-thumbs { left: 8px; right: 8px; bottom: 8px; gap: 5px; padding: 6px; }
+      .vber-thumbs { left: 8px; bottom: 50px; grid-template-columns: repeat(2, 78px); gap: 5px; padding: 6px; }
       .preview-dialog__nav { width: 42px; height: 42px; }
     }
   </style>
@@ -482,8 +515,14 @@
               <p>从 PSD / Figma 解析资产，连接 Cocos / Unity，完成资源拆分、导入和换肤；减少跨工具交接。</p>
             </div>
             <div class="workbench-card__media">
-              <iframe src="https://www.youtube-nocookie.com/embed/SO0Pm1tvPMQ" title="VBER AI Studio Cocos 与 Unity 工作流演示" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-              <button class="media-zoom" type="button" data-preview-kind="iframe" data-preview-src="https://www.youtube-nocookie.com/embed/SO0Pm1tvPMQ?autoplay=1" aria-label="放大查看 VBER AI 工作流视频">放大</button>
+              <div class="vber-main" id="vber-main-media">
+                <video src="assets/vber/vber-engine-reskin-720.mp4" poster="assets/vber/vber-engine-reskin-poster.webp" controls preload="metadata" playsinline aria-label="VBER AI 引擎层换皮演示"></video>
+              </div>
+              <button class="media-zoom" id="vber-main-trigger" type="button" data-preview-kind="video" data-preview-src="assets/vber/vber-engine-reskin-720.mp4" data-preview-group="vber" data-preview-index="0" aria-label="放大查看 VBER AI 引擎层换皮演示">放大</button>
+              <div class="vber-thumbs" aria-label="切换 VBER AI 视频">
+                <button class="vber-thumb is-active" type="button" data-vber-kind="video" data-vber-main-src="assets/vber/vber-engine-reskin-720.mp4" data-vber-preview-src="assets/vber/vber-engine-reskin-720.mp4" data-vber-poster="assets/vber/vber-engine-reskin-poster.webp" data-vber-alt="VBER AI 引擎层换皮演示" aria-label="切换到引擎层换皮演示"><img src="assets/vber/vber-engine-reskin-poster.webp" alt="" loading="lazy"></button>
+                <button class="vber-thumb" type="button" data-vber-kind="iframe" data-vber-main-src="https://www.youtube-nocookie.com/embed/SO0Pm1tvPMQ" data-vber-preview-src="https://www.youtube-nocookie.com/embed/SO0Pm1tvPMQ?autoplay=1" data-vber-alt="VBER AI Studio 工作流演示" aria-label="切换到 VBER AI Studio 工作流演示"><img src="assets/vber/vber-demo-thumb.webp" alt="" loading="lazy"></button>
+              </div>
             </div>
           </article>
         </div>
@@ -512,13 +551,25 @@
       const close = dialog.querySelector('.preview-dialog__close');
       const previous = dialog.querySelector('.preview-dialog__nav--prev');
       const next = dialog.querySelector('.preview-dialog__nav--next');
-      const mainTrigger = document.querySelector('#dreammaker-main-trigger');
-      const mainImage = document.querySelector('#dreammaker-main-image');
-      const galleryButtons = [...document.querySelectorAll('.dreammaker-thumb')];
-      const gallery = galleryButtons.map((button) => ({
+      const dreammakerMainTrigger = document.querySelector('#dreammaker-main-trigger');
+      const dreammakerMainImage = document.querySelector('#dreammaker-main-image');
+      const dreammakerButtons = [...document.querySelectorAll('.dreammaker-thumb')];
+      const dreammakerGallery = dreammakerButtons.map((button) => ({
+        kind: 'image',
         src: button.dataset.gallerySrc,
         alt: button.dataset.galleryAlt
       }));
+      const vberMain = document.querySelector('#vber-main-media');
+      const vberMainTrigger = document.querySelector('#vber-main-trigger');
+      const vberButtons = [...document.querySelectorAll('.vber-thumb')];
+      const vberGallery = vberButtons.map((button) => ({
+        kind: button.dataset.vberKind,
+        mainSrc: button.dataset.vberMainSrc,
+        src: button.dataset.vberPreviewSrc,
+        poster: button.dataset.vberPoster || '',
+        alt: button.dataset.vberAlt
+      }));
+      const previewGalleries = { dreammaker: dreammakerGallery, vber: vberGallery };
       let activeGallery = null;
       let activeIndex = 0;
 
@@ -549,28 +600,63 @@
         const src = trigger.dataset.previewSrc;
         activeGallery = trigger.dataset.previewGroup || null;
         activeIndex = Number(trigger.dataset.previewIndex || 0);
-        dialog.classList.toggle('has-gallery', activeGallery === 'dreammaker');
+        dialog.classList.toggle('has-gallery', Boolean(previewGalleries[activeGallery]));
         renderPreview(kind, src, trigger.getAttribute('aria-label'));
         dialog.showModal();
       }
 
-      galleryButtons.forEach((button, index) => {
+      dreammakerButtons.forEach((button, index) => {
         button.addEventListener('click', (event) => {
           event.stopPropagation();
           activeIndex = index;
-          mainImage.src = gallery[index].src;
-          mainImage.alt = gallery[index].alt;
-          mainTrigger.dataset.previewSrc = gallery[index].src;
-          mainTrigger.dataset.previewIndex = String(index);
-          mainTrigger.setAttribute('aria-label', `放大查看${gallery[index].alt}`);
-          galleryButtons.forEach((item, itemIndex) => item.classList.toggle('is-active', itemIndex === index));
+          dreammakerMainImage.src = dreammakerGallery[index].src;
+          dreammakerMainImage.alt = dreammakerGallery[index].alt;
+          dreammakerMainTrigger.dataset.previewSrc = dreammakerGallery[index].src;
+          dreammakerMainTrigger.dataset.previewIndex = String(index);
+          dreammakerMainTrigger.setAttribute('aria-label', `放大查看${dreammakerGallery[index].alt}`);
+          dreammakerButtons.forEach((item, itemIndex) => item.classList.toggle('is-active', itemIndex === index));
+        });
+      });
+
+      function renderVberMain(item, index) {
+        let media;
+
+        if (item.kind === 'video') {
+          media = document.createElement('video');
+          media.controls = true;
+          media.preload = 'metadata';
+          media.playsInline = true;
+          media.poster = item.poster;
+        } else {
+          media = document.createElement('iframe');
+          media.loading = 'lazy';
+          media.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+          media.allowFullscreen = true;
+        }
+
+        media.src = item.mainSrc;
+        media.setAttribute('aria-label', item.alt);
+        if (item.kind === 'iframe') media.title = item.alt;
+        vberMain.replaceChildren(media);
+        vberMainTrigger.dataset.previewKind = item.kind;
+        vberMainTrigger.dataset.previewSrc = item.src;
+        vberMainTrigger.dataset.previewIndex = String(index);
+        vberMainTrigger.setAttribute('aria-label', `放大查看${item.alt}`);
+      }
+
+      vberButtons.forEach((button, index) => {
+        button.addEventListener('click', (event) => {
+          event.stopPropagation();
+          renderVberMain(vberGallery[index], index);
+          vberButtons.forEach((item, itemIndex) => item.classList.toggle('is-active', itemIndex === index));
         });
       });
 
       function moveGallery(offset) {
-        if (activeGallery !== 'dreammaker' || gallery.length === 0) return;
+        const gallery = previewGalleries[activeGallery];
+        if (!gallery || gallery.length === 0) return;
         activeIndex = (activeIndex + offset + gallery.length) % gallery.length;
-        renderPreview('image', gallery[activeIndex].src, gallery[activeIndex].alt);
+        renderPreview(gallery[activeIndex].kind, gallery[activeIndex].src, gallery[activeIndex].alt);
       }
 
       document.querySelectorAll('[data-preview-kind]').forEach((trigger) => {
@@ -588,7 +674,7 @@
       previous.addEventListener('click', (event) => { event.stopPropagation(); moveGallery(-1); });
       next.addEventListener('click', (event) => { event.stopPropagation(); moveGallery(1); });
       document.addEventListener('keydown', (event) => {
-        if (!dialog.open || activeGallery !== 'dreammaker') return;
+        if (!dialog.open || !previewGalleries[activeGallery]) return;
         if (event.key === 'ArrowLeft') moveGallery(-1);
         if (event.key === 'ArrowRight') moveGallery(1);
       });
