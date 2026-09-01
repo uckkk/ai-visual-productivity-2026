@@ -166,7 +166,8 @@
       backdrop-filter: blur(12px);
     }
 
-    .workbench-heading { margin-bottom: 64px; }
+    .workbench-core { padding: 80px 0 104px; }
+    .workbench-heading { margin-bottom: 44px; }
     .workbench-heading h2 { margin: 0; font-size: clamp(44px, 5.5vw, 76px); line-height: 1; letter-spacing: -.055em; }
     .workbench-types { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
     .workbench-card {
@@ -340,16 +341,63 @@
     <div class="topbar__inner">
       <a class="brand" href="#top">游戏美术 AI · 落地案例</a>
       <div class="nav">
+        <a href="#workbench">AI 工作台</a>
         <a href="#proof">已跑通</a>
         <a href="#map">可复制流程</a>
         <a href="#media">案例画面</a>
-        <a href="#workbench">AI 工作台</a>
       </div>
       <a class="back" href="/ai-visual-productivity-2026/industry-report/">保留旧版 ↗</a>
     </div>
   </nav>
 
   <main id="top">
+    <section class="section workbench-core" id="workbench">
+      <div class="wrap">
+        <header class="workbench-heading">
+          <h2>两类 AI 工作台</h2>
+        </header>
+        <div class="workbench-types">
+          <article class="workbench-card">
+            <div class="workbench-card__head">
+              <small>模型聚合型</small>
+              <h3>网易 DreamMaker</h3>
+              <p>集合 2D、视频、3D、音频等主流模型，降低调用门槛；各工具独立使用，不串联生产流程。</p>
+            </div>
+            <div class="workbench-card__media">
+              <button class="preview-trigger" id="dreammaker-main-trigger" type="button" data-preview-kind="image" data-preview-src="assets/netease/dreammaker-home.jpg" data-preview-group="dreammaker" data-preview-index="0" aria-label="放大查看网易 DreamMaker 首页">
+                <img id="dreammaker-main-image" src="assets/netease/dreammaker-home.jpg" alt="网易 DreamMaker 聚合 2D、视频、3D 等创意工具的首页" loading="lazy">
+              </button>
+              <div class="dreammaker-thumbs" aria-label="切换网易 DreamMaker 界面">
+                <button class="dreammaker-thumb is-active" type="button" data-gallery-src="assets/netease/dreammaker-home.jpg" data-gallery-alt="网易 DreamMaker 首页" aria-label="切换到首页"><img src="assets/netease/dreammaker-home.jpg" alt="" loading="lazy"></button>
+                <button class="dreammaker-thumb" type="button" data-gallery-src="assets/netease/dreammaker-library.jpg" data-gallery-alt="网易 DreamMaker 工具库" aria-label="切换到工具库"><img src="assets/netease/dreammaker-library.jpg" alt="" loading="lazy"></button>
+                <button class="dreammaker-thumb" type="button" data-gallery-src="assets/netease/dreammaker-image.jpg" data-gallery-alt="网易 DreamMaker 图像生成界面" aria-label="切换到图像生成"><img src="assets/netease/dreammaker-image.jpg" alt="" loading="lazy"></button>
+                <button class="dreammaker-thumb" type="button" data-gallery-src="assets/netease/dreammaker-matting.jpg" data-gallery-alt="网易 DreamMaker 一键抠图工具" aria-label="切换到一键抠图"><img src="assets/netease/dreammaker-matting.jpg" alt="" loading="lazy"></button>
+                <button class="dreammaker-thumb" type="button" data-gallery-src="assets/netease/dreammaker-3d.jpg" data-gallery-alt="网易 DreamMaker 3D 模型生成界面" aria-label="切换到 3D 模型生成"><img src="assets/netease/dreammaker-3d.jpg" alt="" loading="lazy"></button>
+              </div>
+            </div>
+          </article>
+
+          <article class="workbench-card">
+            <div class="workbench-card__head">
+              <small>流程贯通型</small>
+              <h3>VBER AI</h3>
+              <p>从 PSD / Figma 解析资产，连接 Cocos / Unity，完成资源拆分、导入和换肤；减少跨工具交接。</p>
+            </div>
+            <div class="workbench-card__media">
+              <div class="vber-main" id="vber-main-media">
+                <video src="assets/vber/vber-engine-reskin-720.mp4" poster="assets/vber/vber-engine-reskin-poster.webp" controls preload="metadata" playsinline aria-label="VBER AI 引擎层换皮演示"></video>
+              </div>
+              <button class="media-zoom" id="vber-main-trigger" type="button" data-preview-kind="video" data-preview-src="assets/vber/vber-engine-reskin-720.mp4" data-preview-group="vber" data-preview-index="0" aria-label="放大查看 VBER AI 引擎层换皮演示">放大</button>
+              <div class="vber-thumbs" aria-label="切换 VBER AI 视频">
+                <button class="vber-thumb is-active" type="button" data-vber-kind="video" data-vber-main-src="assets/vber/vber-engine-reskin-720.mp4" data-vber-preview-src="assets/vber/vber-engine-reskin-720.mp4" data-vber-poster="assets/vber/vber-engine-reskin-poster.webp" data-vber-alt="VBER AI 引擎层换皮演示" aria-label="切换到引擎层换皮演示"><img src="assets/vber/vber-engine-reskin-poster.webp" alt="" loading="lazy"></button>
+                <button class="vber-thumb" type="button" data-vber-kind="iframe" data-vber-main-src="https://www.youtube-nocookie.com/embed/SO0Pm1tvPMQ" data-vber-preview-src="https://www.youtube-nocookie.com/embed/SO0Pm1tvPMQ?autoplay=1" data-vber-alt="VBER AI Studio 工作流演示" aria-label="切换到 VBER AI Studio 工作流演示"><img src="assets/vber/vber-demo-thumb.webp" alt="" loading="lazy"></button>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
     <header class="hero wrap">
       <h1>不看模型有多强，<br>看它<em>省了哪一步</em></h1>
     </header>
@@ -476,53 +524,6 @@
               <h3>Pixel Federation：先用 AI 视频验证创意方向</h3>
               <p>从概念到完整尺寸适配视频用时 10 天；流程为批量试方向、看数据、再加码。</p>
               <a href="https://appagent.com/blog/ai-in-mobile-game-ads-with-examples/" target="_blank" rel="noreferrer">看案例说明 ↗</a>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="workbench">
-      <div class="wrap">
-        <header class="workbench-heading">
-          <h2>两类 AI 工作台</h2>
-        </header>
-        <div class="workbench-types">
-          <article class="workbench-card">
-            <div class="workbench-card__head">
-              <small>模型聚合型</small>
-              <h3>网易 DreamMaker</h3>
-              <p>集合 2D、视频、3D、音频等主流模型，降低调用门槛；各工具独立使用，不串联生产流程。</p>
-            </div>
-            <div class="workbench-card__media">
-              <button class="preview-trigger" id="dreammaker-main-trigger" type="button" data-preview-kind="image" data-preview-src="assets/netease/dreammaker-home.jpg" data-preview-group="dreammaker" data-preview-index="0" aria-label="放大查看网易 DreamMaker 首页">
-                <img id="dreammaker-main-image" src="assets/netease/dreammaker-home.jpg" alt="网易 DreamMaker 聚合 2D、视频、3D 等创意工具的首页" loading="lazy">
-              </button>
-              <div class="dreammaker-thumbs" aria-label="切换网易 DreamMaker 界面">
-                <button class="dreammaker-thumb is-active" type="button" data-gallery-src="assets/netease/dreammaker-home.jpg" data-gallery-alt="网易 DreamMaker 首页" aria-label="切换到首页"><img src="assets/netease/dreammaker-home.jpg" alt="" loading="lazy"></button>
-                <button class="dreammaker-thumb" type="button" data-gallery-src="assets/netease/dreammaker-library.jpg" data-gallery-alt="网易 DreamMaker 工具库" aria-label="切换到工具库"><img src="assets/netease/dreammaker-library.jpg" alt="" loading="lazy"></button>
-                <button class="dreammaker-thumb" type="button" data-gallery-src="assets/netease/dreammaker-image.jpg" data-gallery-alt="网易 DreamMaker 图像生成界面" aria-label="切换到图像生成"><img src="assets/netease/dreammaker-image.jpg" alt="" loading="lazy"></button>
-                <button class="dreammaker-thumb" type="button" data-gallery-src="assets/netease/dreammaker-matting.jpg" data-gallery-alt="网易 DreamMaker 一键抠图工具" aria-label="切换到一键抠图"><img src="assets/netease/dreammaker-matting.jpg" alt="" loading="lazy"></button>
-                <button class="dreammaker-thumb" type="button" data-gallery-src="assets/netease/dreammaker-3d.jpg" data-gallery-alt="网易 DreamMaker 3D 模型生成界面" aria-label="切换到 3D 模型生成"><img src="assets/netease/dreammaker-3d.jpg" alt="" loading="lazy"></button>
-              </div>
-            </div>
-          </article>
-
-          <article class="workbench-card">
-            <div class="workbench-card__head">
-              <small>流程贯通型</small>
-              <h3>VBER AI</h3>
-              <p>从 PSD / Figma 解析资产，连接 Cocos / Unity，完成资源拆分、导入和换肤；减少跨工具交接。</p>
-            </div>
-            <div class="workbench-card__media">
-              <div class="vber-main" id="vber-main-media">
-                <video src="assets/vber/vber-engine-reskin-720.mp4" poster="assets/vber/vber-engine-reskin-poster.webp" controls preload="metadata" playsinline aria-label="VBER AI 引擎层换皮演示"></video>
-              </div>
-              <button class="media-zoom" id="vber-main-trigger" type="button" data-preview-kind="video" data-preview-src="assets/vber/vber-engine-reskin-720.mp4" data-preview-group="vber" data-preview-index="0" aria-label="放大查看 VBER AI 引擎层换皮演示">放大</button>
-              <div class="vber-thumbs" aria-label="切换 VBER AI 视频">
-                <button class="vber-thumb is-active" type="button" data-vber-kind="video" data-vber-main-src="assets/vber/vber-engine-reskin-720.mp4" data-vber-preview-src="assets/vber/vber-engine-reskin-720.mp4" data-vber-poster="assets/vber/vber-engine-reskin-poster.webp" data-vber-alt="VBER AI 引擎层换皮演示" aria-label="切换到引擎层换皮演示"><img src="assets/vber/vber-engine-reskin-poster.webp" alt="" loading="lazy"></button>
-                <button class="vber-thumb" type="button" data-vber-kind="iframe" data-vber-main-src="https://www.youtube-nocookie.com/embed/SO0Pm1tvPMQ" data-vber-preview-src="https://www.youtube-nocookie.com/embed/SO0Pm1tvPMQ?autoplay=1" data-vber-alt="VBER AI Studio 工作流演示" aria-label="切换到 VBER AI Studio 工作流演示"><img src="assets/vber/vber-demo-thumb.webp" alt="" loading="lazy"></button>
-              </div>
             </div>
           </article>
         </div>
