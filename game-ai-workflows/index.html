@@ -227,10 +227,11 @@
     .vber-thumbs {
       position: absolute;
       left: 12px;
-      bottom: 54px;
+      right: 12px;
+      bottom: 12px;
       z-index: 3;
       display: grid;
-      grid-template-columns: repeat(2, 96px);
+      grid-template-columns: repeat(5, minmax(0, 1fr));
       gap: 8px;
       padding: 8px;
       border-radius: 14px;
@@ -331,7 +332,7 @@
       .flow { grid-template-columns: 1fr; }
       .workbench-card__head { min-height: 0; padding: 30px 28px; }
       .dreammaker-thumbs { left: 8px; right: 8px; bottom: 8px; gap: 5px; padding: 6px; }
-      .vber-thumbs { left: 8px; bottom: 50px; grid-template-columns: repeat(2, 78px); gap: 5px; padding: 6px; }
+      .vber-thumbs { left: 8px; right: 8px; bottom: 8px; gap: 5px; padding: 6px; }
       .preview-dialog__nav { width: 42px; height: 42px; }
     }
   </style>
