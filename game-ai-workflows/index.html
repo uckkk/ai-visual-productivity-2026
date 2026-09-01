@@ -79,21 +79,6 @@
       font-weight: 760;
     }
     .hero h1 em { color: var(--accent); font-style: normal; }
-    .hero__metrics {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 48px;
-      margin-top: 96px;
-    }
-    .metric strong {
-      display: block;
-      font-size: clamp(42px, 5vw, 72px);
-      line-height: 1;
-      letter-spacing: -.055em;
-    }
-    .metric span { display: block; margin-top: 12px; color: var(--muted); font-size: 15px; }
-    .metric small { display: block; margin-top: 6px; color: var(--quiet); font-size: 13px; }
-
     .section { padding: 132px 0; }
     .section--soft { background: var(--panel); }
     .section__head { margin-bottom: 64px; }
@@ -206,7 +191,6 @@
       .nav { display: none; }
       .workbench { grid-template-columns: 1fr; gap: 32px; }
       .proof-grid, .media-grid { grid-template-columns: 1fr; }
-      .hero__metrics { grid-template-columns: 1fr; gap: 32px; }
       .map__head { display: none; }
       .map__row { grid-template-columns: 1fr; gap: 8px; }
       .placeholder { min-height: 420px; }
@@ -217,7 +201,6 @@
       .back { display: none; }
       .hero { min-height: auto; padding: 96px 0 72px; }
       .hero h1 { font-size: 54px; }
-      .hero__metrics { margin-top: 68px; }
       .section { padding: 92px 0; }
       .case { min-height: 0; padding: 28px; }
       .flow { grid-template-columns: 1fr; }
@@ -242,25 +225,7 @@
 
   <main id="top">
     <header class="hero wrap">
-      <p class="eyebrow">2026.09 · 企业真实应用 · 2D 棋牌视角</p>
       <h1>不看模型有多强，<br>看它<em>省了哪一步</em></h1>
-      <div class="hero__metrics" aria-label="关键案例数据">
-        <div class="metric">
-          <strong>240%</strong>
-          <span>Games United 美术团队生产力</span>
-          <small>2D 活动资产与 UI</small>
-        </div>
-        <div class="metric">
-          <strong>80%</strong>
-          <span>Cosmic Lounge 节省生产时间</span>
-          <small>AI 直接接入 Unity 自研引擎</small>
-        </div>
-        <div class="metric">
-          <strong>2–3 天 → 2–3 小时</strong>
-          <span>Wild Blueberry 单件复杂资产</span>
-          <small>参考图约束的原画工作流</small>
-        </div>
-      </div>
     </header>
 
     <section class="section section--soft" id="proof">
