@@ -196,16 +196,6 @@
       text-align: center;
     }
 
-    .actions { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-    .action { min-height: 310px; padding: 34px; border-radius: 26px; background: var(--paper); }
-    .action__tag { color: var(--accent); font-size: 13px; font-weight: 750; }
-    .action h3 { margin: 42px 0 10px; font-size: 26px; line-height: 1.18; letter-spacing: -.035em; }
-    .action p { margin: 0; color: var(--muted); font-size: 15px; }
-    .action dl { margin: 34px 0 0; }
-    .action dl div { display: flex; justify-content: space-between; gap: 16px; margin-top: 8px; font-size: 13px; }
-    .action dt { color: var(--quiet); }
-    .action dd { margin: 0; text-align: right; }
-
     .closing { padding: 120px 0 150px; }
     .closing p { max-width: 1080px; margin: 0; font-size: clamp(40px, 5vw, 72px); line-height: 1.08; letter-spacing: -.05em; font-weight: 730; }
     .closing em { color: var(--accent); font-style: normal; }
@@ -216,7 +206,7 @@
       .nav { display: none; }
       .workbench { grid-template-columns: 1fr; gap: 32px; }
       .proof-grid, .media-grid { grid-template-columns: 1fr; }
-      .hero__metrics, .actions { grid-template-columns: 1fr; gap: 32px; }
+      .hero__metrics { grid-template-columns: 1fr; gap: 32px; }
       .map__head { display: none; }
       .map__row { grid-template-columns: 1fr; gap: 8px; }
       .placeholder { min-height: 420px; }
@@ -232,7 +222,6 @@
       .case { min-height: 0; padding: 28px; }
       .flow { grid-template-columns: 1fr; }
       .workbench__list { grid-template-columns: 1fr; }
-      .actions { grid-template-columns: 1fr; }
       .placeholder__modules { grid-template-columns: repeat(2, 1fr); }
     }
   </style>
@@ -246,7 +235,6 @@
         <a href="#map">可复制流程</a>
         <a href="#media">案例画面</a>
         <a href="#workbench">AI 工作台</a>
-        <a href="#actions">试点建议</a>
       </div>
       <a class="back" href="/ai-visual-productivity-2026/industry-report/">保留旧版 ↗</a>
     </div>
@@ -433,34 +421,6 @@
           <div class="placeholder__modules" aria-label="平台能力">
             <span>图像</span><span>视频</span><span>音频</span><span>3D</span>
           </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section section--soft" id="actions">
-      <div class="wrap">
-        <header class="section__head">
-          <h2>最值得先做的三次试验</h2>
-        </header>
-        <div class="actions">
-          <article class="action">
-            <span class="action__tag">优先 1</span>
-            <h3>活动资产同风格批量生产</h3>
-            <p>用一个真实活动主题测试 Layer / Scenario：参考资产、批量候选、人工精修、最终上线。</p>
-            <dl><div><dt>周期</dt><dd>2 周</dd></div><div><dt>看什么</dt><dd>合格率、返工、交付时间</dd></div></dl>
-          </article>
-          <article class="action">
-            <span class="action__tag">优先 2</span>
-            <h3>Cocos 页面换肤</h3>
-            <p>用一个现有页面验证 VBER：只测导入、替换、布局还原和工程修正，不测宣传片效果。</p>
-            <dl><div><dt>周期</dt><dd>1 周</dd></div><div><dt>看什么</dt><dd>省掉步骤、还原度、修正工时</dd></div></dl>
-          </article>
-          <article class="action">
-            <span class="action__tag">优先 3</span>
-            <h3>买量视频创意闭环</h3>
-            <p>一次生成 20 个创意变体，小预算测试后只扩展胜出方向。莉莉丝的数据闭环可作方法参考。</p>
-            <dl><div><dt>周期</dt><dd>2 周</dd></div><div><dt>看什么</dt><dd>单条成本、胜出率、CTR / CPI</dd></div></dl>
-          </article>
         </div>
       </div>
     </section>
