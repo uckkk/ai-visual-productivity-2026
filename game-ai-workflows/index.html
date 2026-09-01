@@ -1,4 +1,5 @@
 <!doctype html>
+<!-- Media rule: losslessly optimize local images/videos before commit; every displayed image/video needs an enlarged preview. -->
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8">
@@ -126,9 +127,9 @@
     .fit { color: var(--accent) !important; font-weight: 700; }
     .fit--watch { color: var(--muted) !important; }
 
-    .media-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+    .media-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
     .media-card { overflow: hidden; background: var(--panel); border-radius: 28px; }
-    .media-card__visual { aspect-ratio: 16/10; overflow: hidden; background: #ededf0; }
+    .media-card__visual { position: relative; aspect-ratio: 16/10; overflow: hidden; background: #ededf0; }
     .media-card__visual img, .media-card__visual video, .media-card__visual iframe {
       height: 100%;
       object-fit: cover;
@@ -140,45 +141,117 @@
     .media-card__body p { margin: 0; color: var(--muted); font-size: 15px; }
     .media-card__body a { display: inline-block; margin-top: 18px; font-size: 14px; text-decoration: underline; text-underline-offset: 4px; }
 
-    .workbench {
-      display: grid;
-      grid-template-columns: .9fr 1.1fr;
-      gap: 72px;
-      align-items: center;
+    .preview-trigger {
+      width: 100%;
+      height: 100%;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      cursor: zoom-in;
     }
-    .workbench h2 { margin: 0; font-size: clamp(44px, 5.5vw, 76px); line-height: 1; letter-spacing: -.055em; }
-    .workbench__lead { margin: 28px 0 0; color: var(--muted); font-size: 20px; }
-    .workbench__list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 26px; margin-top: 48px; }
-    .workbench__list b { display: block; font-size: 16px; }
-    .workbench__list span { display: block; margin-top: 6px; color: var(--muted); font-size: 14px; }
-    .placeholder {
-      min-height: 520px;
-      padding: 36px;
+    .preview-trigger img { transition: transform .35s ease; }
+    .preview-trigger:hover img { transform: scale(1.015); }
+    .media-zoom {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      z-index: 3;
+      min-width: 54px;
+      height: 32px;
+      padding: 0 12px;
+      border: 0;
+      border-radius: 999px;
+      color: var(--paper);
+      background: rgba(17,17,17,.76);
+      font: inherit;
+      font-size: 12px;
+      cursor: zoom-in;
+      backdrop-filter: blur(12px);
+    }
+
+    .workbench-heading { margin-bottom: 64px; }
+    .workbench-heading h2 { margin: 0; font-size: clamp(44px, 5.5vw, 76px); line-height: 1; letter-spacing: -.055em; }
+    .workbench-types { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+    .workbench-card {
+      min-width: 0;
+      overflow: hidden;
       border-radius: 30px;
       background: var(--panel);
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
     }
-    .placeholder__bar { display: flex; gap: 8px; }
-    .placeholder__bar i { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); opacity: .45; }
-    .placeholder__bar i:nth-child(2) { opacity: .7; }
-    .placeholder__bar i:nth-child(3) { opacity: 1; }
-    .placeholder__center { padding: 48px; text-align: center; }
-    .placeholder__center strong { display: block; font-size: 28px; letter-spacing: -.03em; }
-    .placeholder__center span { display: block; max-width: 390px; margin: 12px auto 0; color: var(--muted); font-size: 15px; }
-    .placeholder__modules {
+    .workbench-card__head { min-height: 240px; padding: 38px 40px 34px; }
+    .workbench-card__head small { color: var(--accent); font-size: 13px; font-weight: 750; }
+    .workbench-card__head h3 { margin: 24px 0 12px; font-size: 34px; line-height: 1.1; letter-spacing: -.04em; }
+    .workbench-card__head p { margin: 0; color: var(--muted); font-size: 16px; }
+    .workbench-card__media {
+      position: relative;
+      aspect-ratio: 16/10;
+      overflow: hidden;
+      background: #111;
+    }
+    .workbench-card__media img,
+    .workbench-card__media iframe { width: 100%; height: 100%; object-fit: cover; border: 0; }
+    .workbench-strip {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 8px;
+      padding: 12px;
     }
-    .placeholder__modules span {
-      padding: 12px 8px;
-      border-radius: 999px;
+    .workbench-thumb {
+      aspect-ratio: 16/10;
+      overflow: hidden;
+      padding: 0;
+      border: 0;
+      border-radius: 10px;
       background: var(--paper);
+      cursor: zoom-in;
+    }
+    .workbench-thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .workbench-step {
+      min-height: 72px;
+      padding: 14px 10px;
+      border-radius: 10px;
+      background: var(--paper);
+      display: flex;
+      align-items: center;
+      justify-content: center;
       color: var(--muted);
       font-size: 12px;
       text-align: center;
+    }
+
+    .preview-dialog {
+      width: min(94vw, 1680px);
+      height: min(90vh, 1080px);
+      max-width: none;
+      max-height: none;
+      padding: 0;
+      border: 0;
+      border-radius: 22px;
+      overflow: hidden;
+      background: #111;
+    }
+    .preview-dialog::backdrop { background: rgba(0,0,0,.82); backdrop-filter: blur(8px); }
+    .preview-dialog__body { width: 100%; height: 100%; display: grid; place-items: center; }
+    .preview-dialog__body img,
+    .preview-dialog__body video,
+    .preview-dialog__body iframe { width: 100%; height: 100%; object-fit: contain; border: 0; }
+    .preview-dialog__close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      z-index: 4;
+      width: 40px;
+      height: 40px;
+      padding: 0;
+      border: 0;
+      border-radius: 50%;
+      color: var(--paper);
+      background: rgba(17,17,17,.76);
+      font: inherit;
+      font-size: 24px;
+      cursor: pointer;
     }
 
     .closing { padding: 120px 0 150px; }
@@ -189,11 +262,9 @@
 
     @media (max-width: 900px) {
       .nav { display: none; }
-      .workbench { grid-template-columns: 1fr; gap: 32px; }
-      .proof-grid, .media-grid { grid-template-columns: 1fr; }
+      .proof-grid, .media-grid, .workbench-types { grid-template-columns: 1fr; }
       .map__head { display: none; }
       .map__row { grid-template-columns: 1fr; gap: 8px; }
-      .placeholder { min-height: 420px; }
     }
     @media (max-width: 620px) {
       body { font-size: 16px; }
@@ -204,8 +275,8 @@
       .section { padding: 92px 0; }
       .case { min-height: 0; padding: 28px; }
       .flow { grid-template-columns: 1fr; }
-      .workbench__list { grid-template-columns: 1fr; }
-      .placeholder__modules { grid-template-columns: repeat(2, 1fr); }
+      .workbench-card__head { min-height: 0; padding: 30px 28px; }
+      .workbench-strip { grid-template-columns: repeat(2, 1fr); }
     }
   </style>
 </head>
@@ -315,7 +386,9 @@
         <div class="media-grid">
           <article class="media-card">
             <div class="media-card__visual">
-              <img src="https://www.layer.ai/_astro/qKeE1ErABzTYtQPx67qy5C0Cvw.DZVZyPUB_Z1G7zep.webp" alt="Games United 使用 Layer 生成的 Merge Park UI 资产" loading="lazy">
+              <button class="preview-trigger" type="button" data-preview-kind="image" data-preview-src="https://www.layer.ai/_astro/qKeE1ErABzTYtQPx67qy5C0Cvw.DZVZyPUB_Z1G7zep.webp" aria-label="放大查看 Merge Park UI 资产">
+                <img src="https://www.layer.ai/_astro/qKeE1ErABzTYtQPx67qy5C0Cvw.DZVZyPUB_Z1G7zep.webp" alt="Games United 使用 Layer 生成的 Merge Park UI 资产" loading="lazy">
+              </button>
             </div>
             <div class="media-card__body">
               <small>企业上线案例</small>
@@ -327,7 +400,8 @@
 
           <article class="media-card">
             <div class="media-card__visual">
-              <video src="https://www.layer.ai/_astro/C8ZPa1eezWOwWKcQzByx1w7RFhU.gif.Mp4a7ZU7.mp4" autoplay muted loop playsinline controls aria-label="Cosmic Lounge 在自研 Puzzle Engine 内生成游戏资产"></video>
+              <video src="https://www.layer.ai/_astro/C8ZPa1eezWOwWKcQzByx1w7RFhU.gif.Mp4a7ZU7.mp4" autoplay muted loop playsinline controls preload="metadata" aria-label="Cosmic Lounge 在自研 Puzzle Engine 内生成游戏资产"></video>
+              <button class="media-zoom" type="button" data-preview-kind="video" data-preview-src="https://www.layer.ai/_astro/C8ZPa1eezWOwWKcQzByx1w7RFhU.gif.Mp4a7ZU7.mp4" aria-label="放大查看 Cosmic Lounge 工作流视频">放大</button>
             </div>
             <div class="media-card__body">
               <small>企业上线案例</small>
@@ -339,19 +413,8 @@
 
           <article class="media-card">
             <div class="media-card__visual">
-              <iframe src="https://www.youtube-nocookie.com/embed/SO0Pm1tvPMQ" title="VBER AI Studio Cocos 与 Unity 工作流演示" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-            </div>
-            <div class="media-card__body">
-              <small>厂商演示 · 无公开提效数据</small>
-              <h3>VBER AI：PSD / Figma 到 Cocos 的换肤候选</h3>
-              <p>与 2D 棋牌高度匹配；暂无公开企业提效数据。</p>
-              <a href="https://vberai.com/" target="_blank" rel="noreferrer">看产品信息 ↗</a>
-            </div>
-          </article>
-
-          <article class="media-card">
-            <div class="media-card__visual">
               <iframe src="https://www.youtube-nocookie.com/embed/tgWCi4hZnRQ" title="Pixel Federation Puzzle Adventure AI 买量视频案例" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+              <button class="media-zoom" type="button" data-preview-kind="iframe" data-preview-src="https://www.youtube-nocookie.com/embed/tgWCi4hZnRQ?autoplay=1" aria-label="放大查看 Pixel Federation 买量视频">放大</button>
             </div>
             <div class="media-card__body">
               <small>企业测试案例</small>
@@ -365,30 +428,55 @@
     </section>
 
     <section class="section" id="workbench">
-      <div class="wrap workbench">
-        <div>
-          <p class="eyebrow">大厂的通用行动</p>
-          <h2>自研 AI 工作台</h2>
-          <p class="workbench__lead">重点不是再造一个模型，而是把主流模型变成公司内部可管理、可替换、可追踪的生产能力。</p>
-          <div class="workbench__list">
-            <div><b>统一入口</b><span>按任务调用图像、视频、音频与 3D 模型</span></div>
-            <div><b>统一资产</b><span>参考图、项目风格、版本和生成结果集中管理</span></div>
-            <div><b>统一治理</b><span>账号、权限、成本、版权和数据边界可追踪</span></div>
-            <div><b>统一回写</b><span>结果回到任务、项目与专业软件，而非散落在聊天框</span></div>
-          </div>
-        </div>
-        <div class="placeholder" aria-label="网易 AI 工作台">
-          <div class="placeholder__bar"><i></i><i></i><i></i></div>
-          <div class="placeholder__center">
-            <strong>网易 AI 工作台</strong>
-            <span>统一调用主流创意生成模型</span>
-          </div>
-          <div class="placeholder__modules" aria-label="平台能力">
-            <span>图像</span><span>视频</span><span>音频</span><span>3D</span>
-          </div>
+      <div class="wrap">
+        <header class="workbench-heading">
+          <h2>两类 AI 工作台</h2>
+        </header>
+        <div class="workbench-types">
+          <article class="workbench-card">
+            <div class="workbench-card__head">
+              <small>模型聚合型</small>
+              <h3>网易 DreamMaker</h3>
+              <p>集合 2D、视频、3D、音频等主流模型，降低调用门槛；各工具独立使用，不串联生产流程。</p>
+            </div>
+            <div class="workbench-card__media">
+              <button class="preview-trigger" type="button" data-preview-kind="image" data-preview-src="assets/netease/dreammaker-home.jpg" aria-label="放大查看网易 DreamMaker 首页">
+                <img src="assets/netease/dreammaker-home.jpg" alt="网易 DreamMaker 聚合 2D、视频、3D 等创意工具的首页" loading="lazy">
+              </button>
+            </div>
+            <div class="workbench-strip" aria-label="网易 DreamMaker 更多界面">
+              <button class="workbench-thumb" type="button" data-preview-kind="image" data-preview-src="assets/netease/dreammaker-library.jpg" aria-label="放大查看工具库"><img src="assets/netease/dreammaker-library.jpg" alt="网易 DreamMaker 工具库" loading="lazy"></button>
+              <button class="workbench-thumb" type="button" data-preview-kind="image" data-preview-src="assets/netease/dreammaker-image.jpg" aria-label="放大查看图像生成"><img src="assets/netease/dreammaker-image.jpg" alt="网易 DreamMaker 图像生成界面" loading="lazy"></button>
+              <button class="workbench-thumb" type="button" data-preview-kind="image" data-preview-src="assets/netease/dreammaker-matting.jpg" aria-label="放大查看一键抠图"><img src="assets/netease/dreammaker-matting.jpg" alt="网易 DreamMaker 一键抠图工具" loading="lazy"></button>
+              <button class="workbench-thumb" type="button" data-preview-kind="image" data-preview-src="assets/netease/dreammaker-3d.jpg" aria-label="放大查看 3D 模型生成"><img src="assets/netease/dreammaker-3d.jpg" alt="网易 DreamMaker 3D 模型生成界面" loading="lazy"></button>
+            </div>
+          </article>
+
+          <article class="workbench-card">
+            <div class="workbench-card__head">
+              <small>流程贯通型</small>
+              <h3>VBER AI</h3>
+              <p>从 PSD / Figma 解析资产，连接 Cocos / Unity，完成资源拆分、导入和换肤；减少跨工具交接。</p>
+            </div>
+            <div class="workbench-card__media">
+              <iframe src="https://www.youtube-nocookie.com/embed/SO0Pm1tvPMQ" title="VBER AI Studio Cocos 与 Unity 工作流演示" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+              <button class="media-zoom" type="button" data-preview-kind="iframe" data-preview-src="https://www.youtube-nocookie.com/embed/SO0Pm1tvPMQ?autoplay=1" aria-label="放大查看 VBER AI 工作流视频">放大</button>
+            </div>
+            <div class="workbench-strip" aria-label="VBER AI 流程">
+              <span class="workbench-step">PSD / Figma</span>
+              <span class="workbench-step">资产拆分</span>
+              <span class="workbench-step">Cocos / Unity</span>
+              <span class="workbench-step">工程换肤</span>
+            </div>
+          </article>
         </div>
       </div>
     </section>
+
+    <dialog class="preview-dialog" id="media-preview" aria-label="媒体放大预览">
+      <button class="preview-dialog__close" type="button" aria-label="关闭预览">×</button>
+      <div class="preview-dialog__body"></div>
+    </dialog>
 
     <section class="closing wrap">
       <p>真正值得复制的不是某个模型，<br>而是已经证明能让企业<em>更快交付合格资产</em>的工作流。</p>
@@ -398,5 +486,52 @@
   <footer>
     <div class="wrap"><span>游戏美术 AI · 企业落地案例</span><span>事实截止 2026-09-01</span></div>
   </footer>
+  <script>
+    (() => {
+      const dialog = document.querySelector('#media-preview');
+      const body = dialog.querySelector('.preview-dialog__body');
+      const close = dialog.querySelector('.preview-dialog__close');
+
+      function openPreview(trigger) {
+        const kind = trigger.dataset.previewKind;
+        const src = trigger.dataset.previewSrc;
+        let media;
+
+        if (kind === 'image') {
+          media = document.createElement('img');
+          media.alt = trigger.getAttribute('aria-label') || '放大预览';
+        } else if (kind === 'video') {
+          media = document.createElement('video');
+          media.controls = true;
+          media.autoplay = true;
+          media.playsInline = true;
+        } else {
+          media = document.createElement('iframe');
+          media.title = trigger.getAttribute('aria-label') || '视频预览';
+          media.allow = 'autoplay; fullscreen; picture-in-picture';
+          media.allowFullscreen = true;
+        }
+
+        media.src = src;
+        body.replaceChildren(media);
+        dialog.showModal();
+      }
+
+      document.querySelectorAll('[data-preview-kind]').forEach((trigger) => {
+        trigger.addEventListener('click', () => openPreview(trigger));
+      });
+
+      function closePreview() {
+        dialog.close();
+        body.replaceChildren();
+      }
+
+      close.addEventListener('click', closePreview);
+      dialog.addEventListener('click', (event) => {
+        if (event.target === dialog) closePreview();
+      });
+      dialog.addEventListener('close', () => body.replaceChildren());
+    })();
+  </script>
 </body>
 </html>
