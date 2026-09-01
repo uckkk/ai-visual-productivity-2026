@@ -79,14 +79,6 @@
       font-weight: 760;
     }
     .hero h1 em { color: var(--accent); font-style: normal; }
-    .hero__lead {
-      max-width: 720px;
-      margin: 38px 0 0;
-      color: var(--muted);
-      font-size: clamp(20px, 2.2vw, 30px);
-      line-height: 1.35;
-      letter-spacing: -.025em;
-    }
     .hero__metrics {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -104,20 +96,13 @@
 
     .section { padding: 132px 0; }
     .section--soft { background: var(--panel); }
-    .section__head {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(280px, 420px);
-      gap: 72px;
-      align-items: end;
-      margin-bottom: 64px;
-    }
+    .section__head { margin-bottom: 64px; }
     .section__head h2 {
       margin: 0;
       font-size: clamp(42px, 5vw, 72px);
       line-height: 1.02;
       letter-spacing: -.052em;
     }
-    .section__head p { margin: 0; color: var(--muted); font-size: 18px; }
 
     .proof-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
     .case {
@@ -131,18 +116,6 @@
     }
     .case__meta { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
     .case__company { font-size: 15px; font-weight: 700; }
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      min-height: 28px;
-      padding: 5px 11px;
-      border-radius: 999px;
-      color: var(--ink);
-      background: color-mix(in srgb, var(--accent) 16%, white);
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: .02em;
-    }
     .case h3 { margin: 36px 0 0; font-size: 28px; line-height: 1.18; letter-spacing: -.035em; }
     .case__number { margin-top: 28px; font-size: clamp(48px, 5vw, 72px); font-weight: 760; line-height: 1; letter-spacing: -.055em; }
     .case__result { margin: 12px 0 0; color: var(--muted); }
@@ -209,7 +182,19 @@
     .placeholder__center { padding: 48px; text-align: center; }
     .placeholder__center strong { display: block; font-size: 28px; letter-spacing: -.03em; }
     .placeholder__center span { display: block; max-width: 390px; margin: 12px auto 0; color: var(--muted); font-size: 15px; }
-    .placeholder__note { color: var(--quiet); font-size: 12px; }
+    .placeholder__modules {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+    .placeholder__modules span {
+      padding: 12px 8px;
+      border-radius: 999px;
+      background: var(--paper);
+      color: var(--muted);
+      font-size: 12px;
+      text-align: center;
+    }
 
     .actions { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
     .action { min-height: 310px; padding: 34px; border-radius: 26px; background: var(--paper); }
@@ -221,14 +206,6 @@
     .action dt { color: var(--quiet); }
     .action dd { margin: 0; text-align: right; }
 
-    .evidence { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 60px; }
-    .evidence div { padding: 26px; border-radius: 20px; background: var(--panel); }
-    .evidence b { color: var(--accent); font-size: 15px; }
-    .evidence p { margin: 8px 0 0; color: var(--muted); font-size: 14px; }
-    .source-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px 36px; }
-    .source-list a { padding: 16px 0; border-bottom: 1px solid var(--line); font-size: 14px; }
-    .source-list a span { color: var(--muted); }
-
     .closing { padding: 120px 0 150px; }
     .closing p { max-width: 1080px; margin: 0; font-size: clamp(40px, 5vw, 72px); line-height: 1.08; letter-spacing: -.05em; font-weight: 730; }
     .closing em { color: var(--accent); font-style: normal; }
@@ -237,9 +214,9 @@
 
     @media (max-width: 900px) {
       .nav { display: none; }
-      .section__head, .workbench { grid-template-columns: 1fr; gap: 32px; }
+      .workbench { grid-template-columns: 1fr; gap: 32px; }
       .proof-grid, .media-grid { grid-template-columns: 1fr; }
-      .hero__metrics, .actions, .evidence { grid-template-columns: 1fr; gap: 32px; }
+      .hero__metrics, .actions { grid-template-columns: 1fr; gap: 32px; }
       .map__head { display: none; }
       .map__row { grid-template-columns: 1fr; gap: 8px; }
       .placeholder { min-height: 420px; }
@@ -256,7 +233,7 @@
       .flow { grid-template-columns: 1fr; }
       .workbench__list { grid-template-columns: 1fr; }
       .actions { grid-template-columns: 1fr; }
-      .source-list { grid-template-columns: 1fr; }
+      .placeholder__modules { grid-template-columns: repeat(2, 1fr); }
     }
   </style>
 </head>
@@ -279,7 +256,6 @@
     <header class="hero wrap">
       <p class="eyebrow">2026.09 · 企业真实应用 · 2D 棋牌视角</p>
       <h1>不看模型有多强，<br>看它<em>省了哪一步</em></h1>
-      <p class="hero__lead">只收录有企业、有业务场景、有可核验结果的案例。厂商演示与企业实绩分开呈现。</p>
       <div class="hero__metrics" aria-label="关键案例数据">
         <div class="metric">
           <strong>240%</strong>
@@ -303,12 +279,11 @@
       <div class="wrap">
         <header class="section__head">
           <h2>已经跑通的工作流</h2>
-          <p>先看企业业务结果，再看工具。四个案例都能定位到具体生产环节；数字来自企业案例页。</p>
         </header>
 
         <div class="proof-grid">
           <article class="case">
-            <div class="case__meta"><span class="case__company">Games United × Layer</span><span class="badge">A级证据</span></div>
+            <div class="case__meta"><span class="case__company">Games United × Layer</span></div>
             <h3>活动资产与 UI：用审核过的项目风格批量出图</h3>
             <div class="case__number">240%</div>
             <p class="case__result">团队生产力达到原来的 240%；160 件专业资产已上线。</p>
@@ -321,7 +296,7 @@
           </article>
 
           <article class="case">
-            <div class="case__meta"><span class="case__company">Cosmic Lounge × Layer API</span><span class="badge">A级证据</span></div>
+            <div class="case__meta"><span class="case__company">Cosmic Lounge × Layer API</span></div>
             <h3>引擎融合：设计师在 Unity 自研引擎里直接生成可用资产</h3>
             <div class="case__number">80%</div>
             <p class="case__result">节省生产时间；概念设计速度提升 75%，生成资产已进入在线游戏。</p>
@@ -334,10 +309,10 @@
           </article>
 
           <article class="case">
-            <div class="case__meta"><span class="case__company">Wild Blueberry × Scenario</span><span class="badge">A级证据</span></div>
+            <div class="case__meta"><span class="case__company">Wild Blueberry × Scenario</span></div>
             <h3>角色与道具原画：参考轮廓控制构图，AI 批量生成同风格变化</h3>
             <div class="case__number">4×</div>
-            <p class="case__result">官方案例给出的总体生产速度；复杂护甲由 2–3 天缩短到 2–3 小时。</p>
+            <p class="case__result">生产速度提升 4×；复杂护甲由 2–3 天缩短到 2–3 小时。</p>
             <div class="flow">
               <div><b>输入</b><span>形状参考、深度与风格图</span></div>
               <div><b>AI 替代</b><span>从零绘制大量候选</span></div>
@@ -347,7 +322,7 @@
           </article>
 
           <article class="case">
-            <div class="case__meta"><span class="case__company">三七互娱 × Meshy</span><span class="badge">A级证据</span></div>
+            <div class="case__meta"><span class="case__company">三七互娱 × Meshy</span></div>
             <h3>3D 角色与生物：图生 3D 和部件生成接入建模流程</h3>
             <div class="case__number">5 天 → 2.5 天</div>
             <p class="case__result">简单项目建模时间减半；复杂项目高模工作量降低 30–40%。</p>
@@ -366,7 +341,6 @@
       <div class="wrap">
         <header class="section__head">
           <h2>按我们的岗位，哪些能直接借</h2>
-          <p>没有可靠企业证据的环节不硬凑案例。优先级按 2D 棋牌生产相关度，不按模型热度。</p>
         </header>
         <div class="map" role="table" aria-label="游戏美术工作流复用判断">
           <div class="map__head" role="row"><span>工作环节</span><span>外部已跑通</span><span>我们可复制的部分</span><span>判断</span></div>
@@ -375,7 +349,7 @@
           <div class="map__row" role="row"><b>引擎融合</b><span>Cosmic Lounge 将 Layer API 接入 Unity</span><span>Cocos 内生成、导入、登记与回写</span><span class="fit">直接试</span></div>
           <div class="map__row" role="row"><b>买量视频</b><span>Pixel Federation 用 AI 视频做市场性测试</span><span>批量变体 → 小预算测试 → 数据回流</span><span class="fit">直接试</span></div>
           <div class="map__row" role="row"><b>3D 模型 · 场景与角色</b><span>三七互娱把 Meshy 接入建模流程</span><span>低频 3D 活动资产与宣传素材</span><span class="fit fit--watch">按需试</span></div>
-          <div class="map__row" role="row"><b>动作、特效、音效</b><span>有工具能力；公开量化企业案例不足</span><span>仅以内部真实任务做窄范围验证</span><span class="fit fit--watch">不下结论</span></div>
+          <div class="map__row" role="row"><b>动作、特效、音效</b><span>有工具能力；公开量化企业案例不足</span><span>内部真实任务窄范围验证</span><span class="fit fit--watch">证据不足</span></div>
         </div>
       </div>
     </section>
@@ -384,7 +358,6 @@
       <div class="wrap">
         <header class="section__head">
           <h2>案例画面与流程演示</h2>
-          <p>图片用于看最终资产；视频用于看工作流。厂商演示单独标明，避免把演示当成企业提效结果。</p>
         </header>
         <div class="media-grid">
           <article class="media-card">
@@ -416,9 +389,9 @@
               <iframe src="https://www.youtube-nocookie.com/embed/SO0Pm1tvPMQ" title="VBER AI Studio Cocos 与 Unity 工作流演示" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
             </div>
             <div class="media-card__body">
-              <small>厂商演示 · 尚无公开企业提效数字</small>
+              <small>厂商演示 · 无公开提效数据</small>
               <h3>VBER AI：PSD / Figma 到 Cocos 的换肤候选</h3>
-              <p>与 2D 棋牌高度匹配，但目前只能证明产品能力，不能证明稳定生产效果。应拿真实页面做试点。</p>
+              <p>与 2D 棋牌高度匹配；暂无公开企业提效数据。</p>
               <a href="https://vberai.com/" target="_blank" rel="noreferrer">看产品信息 ↗</a>
             </div>
           </article>
@@ -430,7 +403,7 @@
             <div class="media-card__body">
               <small>企业测试案例</small>
               <h3>Pixel Federation：先用 AI 视频验证创意方向</h3>
-              <p>从概念到完整尺寸适配视频用时 10 天。适合复制“批量试方向—看数据—再加码”的闭环。</p>
+              <p>从概念到完整尺寸适配视频用时 10 天；流程为批量试方向、看数据、再加码。</p>
               <a href="https://appagent.com/blog/ai-in-mobile-game-ads-with-examples/" target="_blank" rel="noreferrer">看案例说明 ↗</a>
             </div>
           </article>
@@ -451,13 +424,15 @@
             <div><b>统一回写</b><span>结果回到任务、项目与专业软件，而非散落在聊天框</span></div>
           </div>
         </div>
-        <div class="placeholder" aria-label="网易 AI 工作台截图占位">
+        <div class="placeholder" aria-label="网易 AI 工作台">
           <div class="placeholder__bar"><i></i><i></i><i></i></div>
           <div class="placeholder__center">
-            <strong>网易 AI 工作台截图</strong>
-            <span>待补正式截图。图片将用于说明“大厂如何统一接入多种主流创意模型”，不把平台存在本身当作提效数据。</span>
+            <strong>网易 AI 工作台</strong>
+            <span>统一调用主流创意生成模型</span>
           </div>
-          <span class="placeholder__note">图片位置已预留 · 16:10 横图</span>
+          <div class="placeholder__modules" aria-label="平台能力">
+            <span>图像</span><span>视频</span><span>音频</span><span>3D</span>
+          </div>
         </div>
       </div>
     </section>
@@ -466,7 +441,6 @@
       <div class="wrap">
         <header class="section__head">
           <h2>最值得先做的三次试验</h2>
-          <p>先验证高频、可计量、可回退的步骤。工作台等到三个试点跑出稳定数据再建设。</p>
         </header>
         <div class="actions">
           <article class="action">
@@ -487,28 +461,6 @@
             <p>一次生成 20 个创意变体，小预算测试后只扩展胜出方向。莉莉丝的数据闭环可作方法参考。</p>
             <dl><div><dt>周期</dt><dd>2 周</dd></div><div><dt>看什么</dt><dd>单条成本、胜出率、CTR / CPI</dd></div></dl>
           </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="sources">
-      <div class="wrap">
-        <header class="section__head">
-          <h2>证据怎么读</h2>
-          <p>数字优先引用企业案例原文；厂商案例可能带营销倾向，所以仍需在内部真实任务上复测。</p>
-        </header>
-        <div class="evidence">
-          <div><b>A 级</b><p>企业实名、业务场景明确、公开量化结果。</p></div>
-          <div><b>B 级</b><p>企业实名且已进入生产，但未公开前后对比数字。</p></div>
-          <div><b>C 级</b><p>厂商演示、原型或二手报道，只能决定是否试点。</p></div>
-        </div>
-        <div class="source-list">
-          <a href="https://www.layer.ai/success-stories/games-united" target="_blank" rel="noreferrer">Games United × Layer <span>· 原画 / UI</span></a>
-          <a href="https://www.layer.ai/success-stories/cosmic-lounge" target="_blank" rel="noreferrer">Cosmic Lounge × Layer <span>· 引擎融合</span></a>
-          <a href="https://www.scenario.com/case-studies/wild-blueberry-games" target="_blank" rel="noreferrer">Wild Blueberry × Scenario <span>· 原画</span></a>
-          <a href="https://www.meshy.ai/customers/37-interactive-entertainment-use-case" target="_blank" rel="noreferrer">三七互娱 × Meshy <span>· 3D 模型</span></a>
-          <a href="https://appagent.com/blog/ai-in-mobile-game-ads-with-examples/" target="_blank" rel="noreferrer">AppAgent 企业案例 <span>· 买量视频</span></a>
-          <a href="https://vberai.com/" target="_blank" rel="noreferrer">VBER AI <span>· UI / Cocos，待试点</span></a>
         </div>
       </div>
     </section>
