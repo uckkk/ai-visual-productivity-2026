@@ -192,34 +192,36 @@
     }
     .workbench-card__media img,
     .workbench-card__media iframe { width: 100%; height: 100%; object-fit: cover; border: 0; }
-    .workbench-strip {
+    .dreammaker-thumbs {
+      position: absolute;
+      left: 12px;
+      right: 12px;
+      bottom: 12px;
+      z-index: 3;
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(5, minmax(0, 1fr));
       gap: 8px;
-      padding: 12px;
+      padding: 8px;
+      border-radius: 14px;
+      background: rgba(17,17,17,.7);
+      backdrop-filter: blur(12px);
     }
-    .workbench-thumb {
-      aspect-ratio: 16/10;
+    .dreammaker-thumb {
+      min-width: 0;
+      aspect-ratio: 16/9;
       overflow: hidden;
       padding: 0;
-      border: 0;
-      border-radius: 10px;
-      background: var(--paper);
-      cursor: zoom-in;
+      border: 2px solid transparent;
+      border-radius: 8px;
+      background: #111;
+      opacity: .68;
+      cursor: pointer;
+      transition: opacity .2s ease, border-color .2s ease;
     }
-    .workbench-thumb img { width: 100%; height: 100%; object-fit: cover; }
-    .workbench-step {
-      min-height: 72px;
-      padding: 14px 10px;
-      border-radius: 10px;
-      background: var(--paper);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--muted);
-      font-size: 12px;
-      text-align: center;
-    }
+    .dreammaker-thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .dreammaker-thumb:hover,
+    .dreammaker-thumb:focus-visible,
+    .dreammaker-thumb.is-active { border-color: var(--accent); opacity: 1; }
 
     .preview-dialog {
       width: min(94vw, 1680px);
@@ -253,6 +255,28 @@
       font-size: 24px;
       cursor: pointer;
     }
+    .preview-dialog__nav {
+      position: absolute;
+      top: 50%;
+      z-index: 4;
+      display: none;
+      width: 48px;
+      height: 48px;
+      padding: 0;
+      border: 0;
+      border-radius: 50%;
+      color: var(--paper);
+      background: rgba(17,17,17,.76);
+      font: inherit;
+      font-size: 34px;
+      line-height: 1;
+      cursor: pointer;
+      transform: translateY(-50%);
+      backdrop-filter: blur(12px);
+    }
+    .preview-dialog.has-gallery .preview-dialog__nav { display: grid; place-items: center; }
+    .preview-dialog__nav--prev { left: 16px; }
+    .preview-dialog__nav--next { right: 16px; }
 
     .closing { padding: 120px 0 150px; }
     .closing p { max-width: 1080px; margin: 0; font-size: clamp(40px, 5vw, 72px); line-height: 1.08; letter-spacing: -.05em; font-weight: 730; }
@@ -276,7 +300,8 @@
       .case { min-height: 0; padding: 28px; }
       .flow { grid-template-columns: 1fr; }
       .workbench-card__head { min-height: 0; padding: 30px 28px; }
-      .workbench-strip { grid-template-columns: repeat(2, 1fr); }
+      .dreammaker-thumbs { left: 8px; right: 8px; bottom: 8px; gap: 5px; padding: 6px; }
+      .preview-dialog__nav { width: 42px; height: 42px; }
     }
   </style>
 </head>
@@ -440,15 +465,16 @@
               <p>集合 2D、视频、3D、音频等主流模型，降低调用门槛；各工具独立使用，不串联生产流程。</p>
             </div>
             <div class="workbench-card__media">
-              <button class="preview-trigger" type="button" data-preview-kind="image" data-preview-src="assets/netease/dreammaker-home.jpg" aria-label="放大查看网易 DreamMaker 首页">
-                <img src="assets/netease/dreammaker-home.jpg" alt="网易 DreamMaker 聚合 2D、视频、3D 等创意工具的首页" loading="lazy">
+              <button class="preview-trigger" id="dreammaker-main-trigger" type="button" data-preview-kind="image" data-preview-src="assets/netease/dreammaker-home.jpg" data-preview-group="dreammaker" data-preview-index="0" aria-label="放大查看网易 DreamMaker 首页">
+                <img id="dreammaker-main-image" src="assets/netease/dreammaker-home.jpg" alt="网易 DreamMaker 聚合 2D、视频、3D 等创意工具的首页" loading="lazy">
               </button>
-            </div>
-            <div class="workbench-strip" aria-label="网易 DreamMaker 更多界面">
-              <button class="workbench-thumb" type="button" data-preview-kind="image" data-preview-src="assets/netease/dreammaker-library.jpg" aria-label="放大查看工具库"><img src="assets/netease/dreammaker-library.jpg" alt="网易 DreamMaker 工具库" loading="lazy"></button>
-              <button class="workbench-thumb" type="button" data-preview-kind="image" data-preview-src="assets/netease/dreammaker-image.jpg" aria-label="放大查看图像生成"><img src="assets/netease/dreammaker-image.jpg" alt="网易 DreamMaker 图像生成界面" loading="lazy"></button>
-              <button class="workbench-thumb" type="button" data-preview-kind="image" data-preview-src="assets/netease/dreammaker-matting.jpg" aria-label="放大查看一键抠图"><img src="assets/netease/dreammaker-matting.jpg" alt="网易 DreamMaker 一键抠图工具" loading="lazy"></button>
-              <button class="workbench-thumb" type="button" data-preview-kind="image" data-preview-src="assets/netease/dreammaker-3d.jpg" aria-label="放大查看 3D 模型生成"><img src="assets/netease/dreammaker-3d.jpg" alt="网易 DreamMaker 3D 模型生成界面" loading="lazy"></button>
+              <div class="dreammaker-thumbs" aria-label="切换网易 DreamMaker 界面">
+                <button class="dreammaker-thumb is-active" type="button" data-gallery-src="assets/netease/dreammaker-home.jpg" data-gallery-alt="网易 DreamMaker 首页" aria-label="切换到首页"><img src="assets/netease/dreammaker-home.jpg" alt="" loading="lazy"></button>
+                <button class="dreammaker-thumb" type="button" data-gallery-src="assets/netease/dreammaker-library.jpg" data-gallery-alt="网易 DreamMaker 工具库" aria-label="切换到工具库"><img src="assets/netease/dreammaker-library.jpg" alt="" loading="lazy"></button>
+                <button class="dreammaker-thumb" type="button" data-gallery-src="assets/netease/dreammaker-image.jpg" data-gallery-alt="网易 DreamMaker 图像生成界面" aria-label="切换到图像生成"><img src="assets/netease/dreammaker-image.jpg" alt="" loading="lazy"></button>
+                <button class="dreammaker-thumb" type="button" data-gallery-src="assets/netease/dreammaker-matting.jpg" data-gallery-alt="网易 DreamMaker 一键抠图工具" aria-label="切换到一键抠图"><img src="assets/netease/dreammaker-matting.jpg" alt="" loading="lazy"></button>
+                <button class="dreammaker-thumb" type="button" data-gallery-src="assets/netease/dreammaker-3d.jpg" data-gallery-alt="网易 DreamMaker 3D 模型生成界面" aria-label="切换到 3D 模型生成"><img src="assets/netease/dreammaker-3d.jpg" alt="" loading="lazy"></button>
+              </div>
             </div>
           </article>
 
@@ -462,12 +488,6 @@
               <iframe src="https://www.youtube-nocookie.com/embed/SO0Pm1tvPMQ" title="VBER AI Studio Cocos 与 Unity 工作流演示" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
               <button class="media-zoom" type="button" data-preview-kind="iframe" data-preview-src="https://www.youtube-nocookie.com/embed/SO0Pm1tvPMQ?autoplay=1" aria-label="放大查看 VBER AI 工作流视频">放大</button>
             </div>
-            <div class="workbench-strip" aria-label="VBER AI 流程">
-              <span class="workbench-step">PSD / Figma</span>
-              <span class="workbench-step">资产拆分</span>
-              <span class="workbench-step">Cocos / Unity</span>
-              <span class="workbench-step">工程换肤</span>
-            </div>
           </article>
         </div>
       </div>
@@ -475,6 +495,8 @@
 
     <dialog class="preview-dialog" id="media-preview" aria-label="媒体放大预览">
       <button class="preview-dialog__close" type="button" aria-label="关闭预览">×</button>
+      <button class="preview-dialog__nav preview-dialog__nav--prev" type="button" aria-label="上一张">‹</button>
+      <button class="preview-dialog__nav preview-dialog__nav--next" type="button" aria-label="下一张">›</button>
       <div class="preview-dialog__body"></div>
     </dialog>
 
@@ -491,15 +513,24 @@
       const dialog = document.querySelector('#media-preview');
       const body = dialog.querySelector('.preview-dialog__body');
       const close = dialog.querySelector('.preview-dialog__close');
+      const previous = dialog.querySelector('.preview-dialog__nav--prev');
+      const next = dialog.querySelector('.preview-dialog__nav--next');
+      const mainTrigger = document.querySelector('#dreammaker-main-trigger');
+      const mainImage = document.querySelector('#dreammaker-main-image');
+      const galleryButtons = [...document.querySelectorAll('.dreammaker-thumb')];
+      const gallery = galleryButtons.map((button) => ({
+        src: button.dataset.gallerySrc,
+        alt: button.dataset.galleryAlt
+      }));
+      let activeGallery = null;
+      let activeIndex = 0;
 
-      function openPreview(trigger) {
-        const kind = trigger.dataset.previewKind;
-        const src = trigger.dataset.previewSrc;
+      function renderPreview(kind, src, label) {
         let media;
 
         if (kind === 'image') {
           media = document.createElement('img');
-          media.alt = trigger.getAttribute('aria-label') || '放大预览';
+          media.alt = label || '放大预览';
         } else if (kind === 'video') {
           media = document.createElement('video');
           media.controls = true;
@@ -507,14 +538,42 @@
           media.playsInline = true;
         } else {
           media = document.createElement('iframe');
-          media.title = trigger.getAttribute('aria-label') || '视频预览';
+          media.title = label || '视频预览';
           media.allow = 'autoplay; fullscreen; picture-in-picture';
           media.allowFullscreen = true;
         }
 
         media.src = src;
         body.replaceChildren(media);
+      }
+
+      function openPreview(trigger) {
+        const kind = trigger.dataset.previewKind;
+        const src = trigger.dataset.previewSrc;
+        activeGallery = trigger.dataset.previewGroup || null;
+        activeIndex = Number(trigger.dataset.previewIndex || 0);
+        dialog.classList.toggle('has-gallery', activeGallery === 'dreammaker');
+        renderPreview(kind, src, trigger.getAttribute('aria-label'));
         dialog.showModal();
+      }
+
+      galleryButtons.forEach((button, index) => {
+        button.addEventListener('click', (event) => {
+          event.stopPropagation();
+          activeIndex = index;
+          mainImage.src = gallery[index].src;
+          mainImage.alt = gallery[index].alt;
+          mainTrigger.dataset.previewSrc = gallery[index].src;
+          mainTrigger.dataset.previewIndex = String(index);
+          mainTrigger.setAttribute('aria-label', `放大查看${gallery[index].alt}`);
+          galleryButtons.forEach((item, itemIndex) => item.classList.toggle('is-active', itemIndex === index));
+        });
+      });
+
+      function moveGallery(offset) {
+        if (activeGallery !== 'dreammaker' || gallery.length === 0) return;
+        activeIndex = (activeIndex + offset + gallery.length) % gallery.length;
+        renderPreview('image', gallery[activeIndex].src, gallery[activeIndex].alt);
       }
 
       document.querySelectorAll('[data-preview-kind]').forEach((trigger) => {
@@ -524,9 +583,18 @@
       function closePreview() {
         dialog.close();
         body.replaceChildren();
+        activeGallery = null;
+        dialog.classList.remove('has-gallery');
       }
 
       close.addEventListener('click', closePreview);
+      previous.addEventListener('click', (event) => { event.stopPropagation(); moveGallery(-1); });
+      next.addEventListener('click', (event) => { event.stopPropagation(); moveGallery(1); });
+      document.addEventListener('keydown', (event) => {
+        if (!dialog.open || activeGallery !== 'dreammaker') return;
+        if (event.key === 'ArrowLeft') moveGallery(-1);
+        if (event.key === 'ArrowRight') moveGallery(1);
+      });
       dialog.addEventListener('click', (event) => {
         if (event.target === dialog) closePreview();
       });
