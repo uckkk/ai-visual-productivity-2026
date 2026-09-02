@@ -169,6 +169,22 @@
     .workbench-core { padding: 80px 0 104px; }
     .workbench-heading { margin-bottom: 44px; }
     .workbench-heading h2 { margin: 0; font-size: clamp(44px, 5.5vw, 76px); line-height: 1; letter-spacing: -.055em; }
+    .ai-path {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr);
+      align-items: stretch;
+      gap: 18px;
+      margin-bottom: 52px;
+    }
+    .ai-path__node {
+      min-width: 0;
+      padding: 24px 26px;
+      border-radius: 20px;
+      background: var(--panel);
+    }
+    .ai-path__node b { display: block; font-size: 18px; line-height: 1.25; }
+    .ai-path__node span { display: block; margin-top: 8px; color: var(--muted); font-size: 14px; line-height: 1.45; }
+    .ai-path__arrow { align-self: center; color: var(--accent); font-size: 24px; font-weight: 700; }
     .workbench-types { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
     .workbench-card {
       min-width: 0;
@@ -332,6 +348,8 @@
     @media (max-width: 900px) {
       .nav { display: none; }
       .proof-grid, .media-grid, .workbench-types { grid-template-columns: 1fr; }
+      .ai-path { grid-template-columns: 1fr; gap: 10px; }
+      .ai-path__arrow { justify-self: center; transform: rotate(90deg); }
       .map__head { display: none; }
       .map__row { grid-template-columns: 1fr; gap: 8px; }
     }
@@ -356,7 +374,7 @@
     <div class="topbar__inner">
       <a class="brand" href="#top">游戏美术 AI · 落地案例</a>
       <div class="nav">
-        <a href="#workbench">AI 工作台</a>
+        <a href="#workbench">AI 落地路径</a>
         <a href="#proof">已跑通</a>
         <a href="#map">可复制流程</a>
         <a href="#media">案例画面</a>
@@ -369,14 +387,21 @@
     <section class="section workbench-core" id="workbench">
       <div class="wrap">
         <header class="workbench-heading">
-          <h2>两类 AI 工作台</h2>
+          <h2>从模型可用，到业务可交付</h2>
         </header>
+        <div class="ai-path" aria-label="企业 AI 落地的三层路径">
+          <div class="ai-path__node"><b>公共 AI 底座</b><span>统一模型、权限、成本与资产</span></div>
+          <span class="ai-path__arrow" aria-hidden="true">→</span>
+          <div class="ai-path__node"><b>岗位自动化</b><span>一线经验封装为插件和小工具</span></div>
+          <span class="ai-path__arrow" aria-hidden="true">→</span>
+          <div class="ai-path__node"><b>垂直生产系统</b><span>把有效工具标准化并串成生产闭环</span></div>
+        </div>
         <div class="workbench-types">
           <article class="workbench-card">
             <div class="workbench-card__head">
-              <small>模型聚合型</small>
+              <small>公共 AI 底座</small>
               <h3>网易 DreamMaker</h3>
-              <p>集合 2D、视频、3D、音频等主流模型，降低调用门槛；各工具独立使用，不串联生产流程。</p>
+              <p>统一接入 2D、视频、3D、音频等能力，降低调用门槛，支撑跨团队复用与统一管理。</p>
             </div>
             <div class="workbench-card__media">
               <button class="preview-trigger" id="dreammaker-main-trigger" type="button" data-preview-kind="image" data-preview-src="assets/netease/dreammaker-home.jpg" data-preview-group="dreammaker" data-preview-index="0" aria-label="放大查看网易 DreamMaker 首页">
@@ -394,14 +419,14 @@
 
           <article class="workbench-card">
             <div class="workbench-card__head">
-              <small>流程贯通型</small>
+              <small>垂直生产系统</small>
               <div class="workbench-title">
                 <h3>VBER AI</h3>
                 <a class="workbench-title__link" href="https://vberai.com/" target="_blank" rel="noreferrer" aria-label="打开 VBER AI 官网">
                   <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5M11 9v3H4V5h3"/></svg>
                 </a>
               </div>
-              <p>从 PSD / Figma 解析资产，连接 Cocos / Unity，完成资源拆分、导入和换肤；减少跨工具交接。</p>
+              <p>连接 PSD / Figma、AI 处理、风格控制、资产规范校验、人工验收与 Cocos / Unity，交付可直接进入项目的合格资产。</p>
             </div>
             <div class="workbench-card__media">
               <div class="vber-main" id="vber-main-media">
