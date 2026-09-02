@@ -169,23 +169,7 @@
     .workbench-core { padding: 80px 0 104px; }
     .workbench-heading { margin-bottom: 44px; }
     .workbench-heading h2 { margin: 0; font-size: clamp(44px, 5.5vw, 76px); line-height: 1; letter-spacing: -.055em; }
-    .ai-path {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr);
-      align-items: stretch;
-      gap: 18px;
-      margin-bottom: 52px;
-    }
-    .ai-path__node {
-      min-width: 0;
-      padding: 24px 26px;
-      border-radius: 20px;
-      background: var(--panel);
-    }
-    .ai-path__node b { display: block; font-size: 18px; line-height: 1.25; }
-    .ai-path__node span { display: block; margin-top: 8px; color: var(--muted); font-size: 14px; line-height: 1.45; }
-    .ai-path__arrow { align-self: center; color: var(--accent); font-size: 24px; font-weight: 700; }
-    .workbench-types { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+    .workbench-types { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
     .workbench-card {
       min-width: 0;
       overflow: hidden;
@@ -194,11 +178,11 @@
       display: flex;
       flex-direction: column;
     }
-    .workbench-card__head { min-height: 240px; padding: 38px 40px 34px; }
+    .workbench-card__head { min-height: 252px; padding: 34px 32px 30px; }
     .workbench-card__head small { color: var(--accent); font-size: 13px; font-weight: 750; }
-    .workbench-card__head h3 { margin: 24px 0 12px; font-size: 34px; line-height: 1.1; letter-spacing: -.04em; }
+    .workbench-card__head h3 { margin: 22px 0 12px; font-size: 30px; line-height: 1.1; letter-spacing: -.04em; }
     .workbench-card__head p { margin: 0; color: var(--muted); font-size: 16px; }
-    .workbench-title { display: flex; align-items: center; gap: 10px; margin: 24px 0 12px; }
+    .workbench-title { display: flex; align-items: center; gap: 10px; margin: 22px 0 12px; }
     .workbench-title h3 { margin: 0; }
     .workbench-title__link {
       display: grid;
@@ -348,8 +332,6 @@
     @media (max-width: 900px) {
       .nav { display: none; }
       .proof-grid, .media-grid, .workbench-types { grid-template-columns: 1fr; }
-      .ai-path { grid-template-columns: 1fr; gap: 10px; }
-      .ai-path__arrow { justify-self: center; transform: rotate(90deg); }
       .map__head { display: none; }
       .map__row { grid-template-columns: 1fr; gap: 8px; }
     }
@@ -387,15 +369,8 @@
     <section class="section workbench-core" id="workbench">
       <div class="wrap">
         <header class="workbench-heading">
-          <h2>从模型可用，到业务可交付</h2>
+          <h2>从模型入口，到岗位工具，再到生产闭环</h2>
         </header>
-        <div class="ai-path" aria-label="企业 AI 落地的三层路径">
-          <div class="ai-path__node"><b>公共 AI 底座</b><span>统一模型、权限、成本与资产</span></div>
-          <span class="ai-path__arrow" aria-hidden="true">→</span>
-          <div class="ai-path__node"><b>岗位自动化</b><span>一线经验封装为插件和小工具</span></div>
-          <span class="ai-path__arrow" aria-hidden="true">→</span>
-          <div class="ai-path__node"><b>垂直生产系统</b><span>把有效工具标准化并串成生产闭环</span></div>
-        </div>
         <div class="workbench-types">
           <article class="workbench-card">
             <div class="workbench-card__head">
@@ -405,7 +380,7 @@
             </div>
             <div class="workbench-card__media">
               <button class="preview-trigger" id="dreammaker-main-trigger" type="button" data-preview-kind="image" data-preview-src="assets/netease/dreammaker-home.jpg" data-preview-group="dreammaker" data-preview-index="0" aria-label="放大查看网易 DreamMaker 首页">
-                <img id="dreammaker-main-image" src="assets/netease/dreammaker-home.jpg" alt="网易 DreamMaker 聚合 2D、视频、3D 等创意工具的首页" loading="lazy">
+                <img id="dreammaker-main-image" src="assets/netease/dreammaker-home.jpg" alt="网易 DreamMaker 聚合 2D、视频、3D 等创意工具的首页" decoding="async" fetchpriority="high">
               </button>
               <div class="dreammaker-thumbs" aria-label="切换网易 DreamMaker 界面">
                 <button class="dreammaker-thumb is-active" type="button" data-gallery-src="assets/netease/dreammaker-home.jpg" data-gallery-alt="网易 DreamMaker 首页" aria-label="切换到首页"><img src="assets/netease/dreammaker-home.jpg" alt="" loading="lazy"></button>
@@ -414,6 +389,18 @@
                 <button class="dreammaker-thumb" type="button" data-gallery-src="assets/netease/dreammaker-matting.jpg" data-gallery-alt="网易 DreamMaker 一键抠图工具" aria-label="切换到一键抠图"><img src="assets/netease/dreammaker-matting.jpg" alt="" loading="lazy"></button>
                 <button class="dreammaker-thumb" type="button" data-gallery-src="assets/netease/dreammaker-3d.jpg" data-gallery-alt="网易 DreamMaker 3D 模型生成界面" aria-label="切换到 3D 模型生成"><img src="assets/netease/dreammaker-3d.jpg" alt="" loading="lazy"></button>
               </div>
+            </div>
+          </article>
+
+          <article class="workbench-card">
+            <div class="workbench-card__head">
+              <small>岗位自动化</small>
+              <h3>地图环境快速编辑插件</h3>
+              <p>莉莉丝从业者自制。把平台、楼梯、栏杆等高频编辑动作封装成岗位工具；解决重复操作，不必强行依赖大模型。</p>
+            </div>
+            <div class="workbench-card__media">
+              <video src="assets/workflows/lilith-map-plugin-720.mp4" poster="assets/workflows/lilith-map-plugin-poster.webp" controls preload="none" playsinline aria-label="地图环境快速编辑插件演示"></video>
+              <button class="media-zoom" type="button" data-preview-kind="video" data-preview-src="assets/workflows/lilith-map-plugin-720.mp4" aria-label="放大查看地图环境快速编辑插件演示">放大</button>
             </div>
           </article>
 
@@ -430,7 +417,7 @@
             </div>
             <div class="workbench-card__media">
               <div class="vber-main" id="vber-main-media">
-                <video src="assets/vber/vber-engine-reskin-720.mp4" poster="assets/vber/vber-engine-reskin-poster.webp" controls preload="metadata" playsinline aria-label="VBER AI 引擎层换皮演示"></video>
+                <video src="assets/vber/vber-engine-reskin-720.mp4" poster="assets/vber/vber-engine-reskin-poster.webp" controls preload="none" playsinline aria-label="VBER AI 引擎层换皮演示"></video>
               </div>
               <button class="media-zoom" id="vber-main-trigger" type="button" data-preview-kind="video" data-preview-src="assets/vber/vber-engine-reskin-720.mp4" data-preview-group="vber" data-preview-index="0" aria-label="放大查看 VBER AI 引擎层换皮演示">放大</button>
               <div class="vber-thumbs" aria-label="切换 VBER AI 视频">
@@ -516,6 +503,7 @@
         </header>
         <div class="map" role="table" aria-label="游戏美术工作流复用判断">
           <div class="map__head" role="row"><span>工作环节</span><span>外部已跑通</span><span>我们可复制的部分</span><span>判断</span></div>
+          <div class="map__row" role="row"><b>3D 场景 · 地图编辑</b><span>莉莉丝从业者把岗位经验封装成插件</span><span>平台、楼梯、栏杆等高频结构快速编辑</span><span class="fit">直接试</span></div>
           <div class="map__row" role="row"><b>原画 · 场景与角色</b><span>Layer 风格训练；Scenario 参考约束</span><span>活动主题、角色候选、道具套系</span><span class="fit">直接试</span></div>
           <div class="map__row" role="row"><b>UI</b><span>Games United 商城页与活动界面</span><span>同主题组件、按钮、弹窗与换肤</span><span class="fit">直接试</span></div>
           <div class="map__row" role="row"><b>引擎融合</b><span>Cosmic Lounge 将 Layer API 接入 Unity</span><span>Cocos 内生成、导入、登记与回写</span><span class="fit">直接试</span></div>
@@ -534,8 +522,8 @@
         <div class="media-grid">
           <article class="media-card">
             <div class="media-card__visual">
-              <button class="preview-trigger" type="button" data-preview-kind="image" data-preview-src="https://www.layer.ai/_astro/qKeE1ErABzTYtQPx67qy5C0Cvw.DZVZyPUB_Z1G7zep.webp" aria-label="放大查看 Merge Park UI 资产">
-                <img src="https://www.layer.ai/_astro/qKeE1ErABzTYtQPx67qy5C0Cvw.DZVZyPUB_Z1G7zep.webp" alt="Games United 使用 Layer 生成的 Merge Park UI 资产" loading="lazy">
+              <button class="preview-trigger" type="button" data-preview-kind="image" data-preview-src="assets/workflows/merge-park.webp" aria-label="放大查看 Merge Park UI 资产">
+                <img src="assets/workflows/merge-park.webp" alt="Games United 使用 Layer 生成的 Merge Park UI 资产" loading="lazy" decoding="async">
               </button>
             </div>
             <div class="media-card__body">
@@ -548,8 +536,9 @@
 
           <article class="media-card">
             <div class="media-card__visual">
-              <video src="https://www.layer.ai/_astro/C8ZPa1eezWOwWKcQzByx1w7RFhU.gif.Mp4a7ZU7.mp4" autoplay muted loop playsinline controls preload="metadata" aria-label="Cosmic Lounge 在自研 Puzzle Engine 内生成游戏资产"></video>
-              <button class="media-zoom" type="button" data-preview-kind="video" data-preview-src="https://www.layer.ai/_astro/C8ZPa1eezWOwWKcQzByx1w7RFhU.gif.Mp4a7ZU7.mp4" aria-label="放大查看 Cosmic Lounge 工作流视频">放大</button>
+              <button class="preview-trigger" type="button" data-preview-kind="video" data-preview-src="assets/workflows/cosmic-lounge.mp4" aria-label="播放 Cosmic Lounge 工作流视频">
+                <img src="assets/workflows/cosmic-lounge-poster.webp" alt="Cosmic Lounge 在自研 Puzzle Engine 内生成游戏资产" loading="lazy" decoding="async">
+              </button>
             </div>
             <div class="media-card__body">
               <small>企业上线案例</small>
@@ -561,8 +550,9 @@
 
           <article class="media-card">
             <div class="media-card__visual">
-              <iframe src="https://www.youtube-nocookie.com/embed/tgWCi4hZnRQ" title="Pixel Federation Puzzle Adventure AI 买量视频案例" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-              <button class="media-zoom" type="button" data-preview-kind="iframe" data-preview-src="https://www.youtube-nocookie.com/embed/tgWCi4hZnRQ?autoplay=1" aria-label="放大查看 Pixel Federation 买量视频">放大</button>
+              <button class="preview-trigger" type="button" data-preview-kind="iframe" data-preview-src="https://www.youtube-nocookie.com/embed/tgWCi4hZnRQ?autoplay=1" aria-label="播放 Pixel Federation 买量视频">
+                <img src="assets/workflows/pixel-federation.webp" alt="Pixel Federation Puzzle Adventure AI 买量视频案例" loading="lazy" decoding="async">
+              </button>
             </div>
             <div class="media-card__body">
               <small>企业测试案例</small>
@@ -588,7 +578,7 @@
   </main>
 
   <footer>
-    <div class="wrap"><span>游戏美术 AI · 企业落地案例</span><span>事实截止 2026-09-01</span></div>
+    <div class="wrap"><span>游戏美术 AI · 企业落地案例</span><span>事实截止 2026-09-02</span></div>
   </footer>
   <script>
     (() => {
@@ -670,7 +660,7 @@
         if (item.kind === 'video') {
           media = document.createElement('video');
           media.controls = true;
-          media.preload = 'metadata';
+          media.preload = 'none';
           media.playsInline = true;
           media.poster = item.poster;
         } else {
