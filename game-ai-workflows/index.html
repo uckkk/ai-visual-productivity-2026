@@ -169,6 +169,22 @@
     .workbench-core { padding: 80px 0 104px; }
     .workbench-heading { margin-bottom: 44px; }
     .workbench-heading h2 { margin: 0; font-size: clamp(44px, 5.5vw, 76px); line-height: 1; letter-spacing: -.055em; }
+    .ai-path {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr);
+      align-items: stretch;
+      gap: 18px;
+      margin-bottom: 52px;
+    }
+    .ai-path__node {
+      min-width: 0;
+      padding: 24px 26px;
+      border-radius: 20px;
+      background: var(--panel);
+    }
+    .ai-path__node b { display: block; font-size: 18px; line-height: 1.25; }
+    .ai-path__node span { display: block; margin-top: 8px; color: var(--muted); font-size: 14px; line-height: 1.45; }
+    .ai-path__arrow { align-self: center; color: var(--accent); font-size: 24px; font-weight: 700; }
     .workbench-types { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
     .workbench-card {
       min-width: 0;
@@ -332,6 +348,8 @@
     @media (max-width: 900px) {
       .nav { display: none; }
       .proof-grid, .media-grid, .workbench-types { grid-template-columns: 1fr; }
+      .ai-path { grid-template-columns: 1fr; gap: 10px; }
+      .ai-path__arrow { justify-self: center; transform: rotate(90deg); }
       .map__head { display: none; }
       .map__row { grid-template-columns: 1fr; gap: 8px; }
     }
@@ -371,6 +389,22 @@
         <header class="workbench-heading">
           <h2>从模型入口，到岗位工具，再到生产闭环</h2>
         </header>
+        <div class="ai-path" aria-label="企业 AI 落地的三层路径">
+          <div class="ai-path__node">
+            <b>公共 AI 底座</b>
+            <span>统一模型、权限、成本与资产</span>
+          </div>
+          <span class="ai-path__arrow" aria-hidden="true">→</span>
+          <div class="ai-path__node">
+            <b>岗位自动化</b>
+            <span>一线经验封装为插件和小工具</span>
+          </div>
+          <span class="ai-path__arrow" aria-hidden="true">→</span>
+          <div class="ai-path__node">
+            <b>垂直生产系统</b>
+            <span>把有效工具标准化并串成生产闭环</span>
+          </div>
+        </div>
         <div class="workbench-types">
           <article class="workbench-card">
             <div class="workbench-card__head">
